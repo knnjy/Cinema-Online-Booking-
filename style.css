@@ -15,14 +15,17 @@
 
 /* Reset-ish */
 *{box-sizing:border-box}
-html,body{height:100%}
+/* html,body{height:100%} */
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
 }
-
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
 /* Container */
 .container{
@@ -178,7 +181,7 @@ body {
   box-shadow:var(--shadow);
   transition:transform .18s, box-shadow .18s;
 }
-.card img{ width:100%; display:block; height:100%; object-fit:cover; aspect-ratio:3/4; }
+.card img{ width:100%; display:block; object-fit:cover; aspect-ratio:3/4; }
 .card-body{ padding:12px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
 .card:hover{ transform:translateY(-6px); box-shadow:0 12px 30px rgba(17,17,17,0.08); }
 

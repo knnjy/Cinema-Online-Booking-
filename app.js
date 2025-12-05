@@ -1,3 +1,26 @@
+
+// Loads header and footer into every page
+document.addEventListener("DOMContentLoaded", () => {
+  // Load Header
+  fetch("header.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("header").innerHTML = html;
+    });
+
+  // Load Footer
+  fetch("footer.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("footer").innerHTML = html;
+
+      // Update year AFTER footer loads
+      const yearEl = document.getElementById("year");
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+    });
+});
+
+
 // Minimal interactivity: hamburger, modal booking, year
 document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById('year');
@@ -49,3 +72,4 @@ document.addEventListener('DOMContentLoaded', () => {
     bookingForm.reset();
   });
 });
+
