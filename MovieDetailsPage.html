@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cinema — Movie Details</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- Auto-loaded header -->
+  <div id="header"></div>
+
+  <main>
+    <section class="section" style="padding-top:100px;">
+      <div class="container" id="movieDetails">
+        <!-- Movie details will be dynamically inserted here -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Auto-loaded footer -->
+  <div id="footer"></div>
+
+  <!-- Booking Modal (shared) -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <h3 id="modalTitle">Book Tickets</h3>
+      <p class="muted" id="modalMovie">Movie</p>
+
+      <form id="bookingForm">
+        <label>
+          Date
+          <input type="date" name="date" required />
+        </label>
+        <label>
+          Seats
+          <select name="seats" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </label>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn primary">Confirm</button>
+          <button type="button" class="btn ghost" id="cancelBtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/include.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // Movie data
+    const movies = {
+      "Gagamboy": { poster: "Images/Gagamboy_Movie.jpg", duration: "148 mins", description: "Action-packed superhero adventure." },
+      "Wapakman": { poster: "Images/Wapakman.jpg", duration: "146 mins", description: "Comedy superhero with heartwarming moments." },
+      "Ang Panday": { poster: "Images/Ang Panday.jpg", duration: "146 mins", description: "Classic Filipino fantasy adventure." },
+      "Bahay na Pula": { poster: "Images/Bahay na Pula.jpg", duration: "146 mins", description: "Horror thriller set in a haunted mansion." },
+      "Kumander Ulupong": { poster: "Images/Kumander Ulupong.jpg", duration: "146 mins", description: "Historical action film with epic battles." }
+    };
+
+    function getMovieFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('movie') || null;
+    }
+
+    function renderMovieDetails(movieName) {
+      const container = document.getElementById('movieDetails');
+      if (!movieName || !movies[movieName]) {
+        container.innerHTML = `<h2 class="section-title">Movie Not Found</h2>`;
+        return;
+      }
+
+      const movie = movies[movieName];
+
+      container.innerHTML = `
+        <div class="movie-highlight">
+          <img src="${movie.poster}" alt="${movieName} poster" />
+          <div class="highlight-body">
+            <h2>${movieName}</h2>
+            <p class="muted">${movie.duration}</p>
+            <p>${movie.description}</p>
+            <div class="highlight-actions">
+              <button class="btn primary" data-movie="${movieName}">Book Tickets Now</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const movieName = getMovieFromURL();
+      renderMovieDetails(movieName);
+
+      // Modal handling for Book button inside movie details
+      document.body.addEventListener('click', e => {
+        const btn = e.target.closest('[data-movie]');
+        if (!btn) return;
+
+        const movie = btn.getAttribute('data-movie') || 'Movie';
+        const modalMovie = document.getElementById('modalMovie');
+        const modal = document.getElementById('modal');
+
+        modalMovie.textContent = movie;
+        modal.setAttribute('aria-hidden', 'false');
+      });
+    });
+  </script>
+
+</body>
+</html>

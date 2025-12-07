@@ -23,32 +23,39 @@
 
     <!-- Movies Grid -->
     <section class="section">
-        
       <div class="container">
         <h1 class="section-title">Now Showing</h1>
-
         <div class="grid" id="moviesGrid">
-            
-          <!-- Example Movie Cards -->
-          <article class="card">
+          <article class="card" data-movie="Gagamboy">
             <img src="Images/Gagamboy_Movie.jpg" alt="Gagamboy poster" />
             <div class="card-body">
               <h3>Gagamboy</h3>
               <p class="muted">148 mins</p>
-              <button class="btn primary small" data-movie="Gagamboy">Book</button>
             </div>
           </article>
 
-          <article class="card">
+          <article class="card" data-movie="Wapakman">
             <img src="Images/Wapakman.jpg" alt="Wapakman poster" />
             <div class="card-body">
               <h3>Wapakman</h3>
               <p class="muted">146 mins</p>
-              <button class="btn primary small" data-movie="Wapakman">Book</button>
             </div>
           </article>
 
-          <article class="card">
+          <article class="card" data-movie="Ang Panday">
+            <img src="Images/Ang Panday.jpg" alt="Ang Panday poster" />
+            <div class="card-body">
+              <h3>Ang Panday</h3>
+              <p class="muted">146 mins</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="container">
+        <h1 class="section-title">Coming Soon</h1>
+        <div class="grid" id="comingSoonGrid">
+          <article class="card" data-movie="Ang Panday">
             <img src="Images/Ang Panday.jpg" alt="Ang Panday poster" />
             <div class="card-body">
               <h3>Ang Panday</h3>
@@ -57,26 +64,23 @@
             </div>
           </article>
 
-          <article class="card">
-            <img src="Images/Bahay na Pula.jpg" alt="Bahay na pula poster" />
+          <article class="card" data-movie="Bahay na Pula">
+            <img src="Images/Bahay na Pula.jpg" alt="Bahay na Pula poster" />
             <div class="card-body">
-              <h3>Bahay na pula</h3>
+              <h3>Bahay na Pula</h3>
               <p class="muted">146 mins</p>
-              <button class="btn primary small" data-movie="Ang Panday">Book</button>
+              <button class="btn primary small" data-movie="Bahay na Pula">Book</button>
             </div>
           </article>
 
-          <article class="card">
+          <article class="card" data-movie="Kumander Ulupong">
             <img src="Images/Kumander Ulupong.jpg" alt="Kumander Ulupong poster" />
             <div class="card-body">
               <h3>Kumander Ulupong</h3>
               <p class="muted">146 mins</p>
-              <button class="btn primary small" data-movie="Ang Panday">Book</button>
+              <button class="btn primary small" data-movie="Kumander Ulupong">Book</button>
             </div>
           </article>
-
-          <!-- Add as many cards as you want -->
-
         </div>
       </div>
     </section>
@@ -86,8 +90,33 @@
   <div id="footer"></div>
 
   <!-- Shared Scripts -->
-  <script src="js/include.js"></script>
   <script src="app.js"></script>
+  <!-- <script>
+    // Navigate to MovieDetailsPage on card click
+    document.getElementById('moviesGrid')?.addEventListener('click', e => {
+      const card = e.target.closest('.card');
+      if (!card) return;
 
+      // Ignore clicks on book buttons
+      if (e.target.closest('button')) return;
+
+      const movie = card.getAttribute('data-movie');
+      if (movie) {
+        window.location.href = `MovieDetailsPage.html?movie=${encodeURIComponent(movie)}`;
+      }
+    });
+
+    // Optional: Coming Soon cards can also redirect if you want
+    document.getElementById('comingSoonGrid')?.addEventListener('click', e => {
+      const card = e.target.closest('.card');
+      if (!card) return;
+      if (e.target.closest('button')) return;
+
+      const movie = card.getAttribute('data-movie');
+      if (movie) {
+        window.location.href = `MovieDetailsPage.html?movie=${encodeURIComponent(movie)}`;
+      }
+    });
+  </script> -->
 </body>
 </html>
