@@ -95,3 +95,63 @@ function initBookingModal() {
         window.location.href = `MovieDetailsPage.html?movie=${encodeURIComponent(movie)}`;
       }
     });
+
+    // Movie data
+    const movies = {
+      "Gagamboy": { poster: "Images/Gagamboy_Movie.jpg", duration: "148 mins", description: "Action-packed superhero adventure." },
+      "Wapakman": { poster: "Images/Wapakman.jpg", duration: "126 mins", description: "Comedy superhero with heartwarming moments." },
+      "Ang Panday": { poster: "Images/Ang Panday.jpg", duration: "97 mins", description: "Classic Filipino fantasy adventure." },
+      "Bahay na Pula": { poster: "Images/Bahay na Pula.jpg", duration: "120 mins", description: "Horror thriller set in a haunted mansion." },
+      "Kumander Ulupong": { poster: "Images/Kumander Ulupong.jpg", duration: "134 mins", description: "Historical action film with epic battles." }
+    };
+
+    function getMovieFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('movie') || null;
+    }
+
+    function renderMovieDetails(movieName) {
+      const container = document.getElementById('movieDetails');
+      if (!movieName || !movies[movieName]) {
+        container.innerHTML = `<h2 class="section-title">Movie Not Found</h2>`;
+        return;
+      }
+
+      const movie = movies[movieName];
+
+      container.innerHTML = `
+        <div class="movie-highlight">
+          <img src="${movie.poster}" alt="${movieName} poster" />
+          <div class="highlight-body">
+            <h2>${movieName}</h2>
+            <p class="muted">${movie.duration}</p>
+            <p>${movie.description}</p>
+            <div class="highlight-actions">
+              <button class="btn primary" data-movie="${movieName}">Book Tickets Now</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+  document.addEventListener("DOMContentLoaded", () => {
+  const movieName = getMovieFromURL();
+  renderMovieDetails(movieName);
+
+  const movieDetailsContainer = document.getElementById('movieDetails');
+  if (movieDetailsContainer) {
+    // Redirect to showtime page instead of modal
+    movieDetailsContainer.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-movie]');
+      if (!btn) return;
+
+      const movie = btn.getAttribute('data-movie');
+      window.location.href = `showtime.html?movie=${encodeURIComponent(movie)}`;
+    });
+  } else {
+    initBookingModal(); // Only init modal on main page
+  }
+});
+
+
+

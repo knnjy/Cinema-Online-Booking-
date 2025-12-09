@@ -1,0 +1,81 @@
+.seat-map {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr); /* 8 seats per row */
+      gap: 6px;
+      max-width: 480px;
+      margin: 20px auto;
+    }
+    .seat {
+      background: #111;
+      color: #fff;
+      padding: 12px 0;
+      text-align: center;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      user-select: none;
+      transition: all 0.2s;
+    }
+    .seat.selected { background: #f1c40f; color: #111; }
+    .seat.booked { background: #444; color: #aaa; cursor: not-allowed; }
+    .seat:hover:not(.booked):not(.selected) { background: #333; }
+    .screen {
+      text-align: center;
+      margin: 20px auto;
+      width: 80%;
+      padding: 6px 0;
+      background: #222;
+      border-radius: 4px;
+      color: #fff;
+      font-weight: 700;
+    }
+    .booking-summary { text-align: center; margin-top: 20px; color: #fff; }
+    .btn.primary { margin-top: 10px; }
+
+        /* Style date input */
+    #showDate {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #111;
+    color: #fff;
+    font-size: 1rem;
+    margin-top: 8px;
+    width: 200px;
+    }
+
+    /* Focus effect */
+    #showDate:focus {
+    outline: none;
+    border-color: #f1c40f;
+    box-shadow: 0 0 6px #f1c40f;
+    }
+    .legend { display: flex; justify-content: center; gap: 20px; margin-top: 12px; }
+    .legend div { display: flex; align-items: center; gap: 6px; }
+    .legend span { display: block; width: 20px; height: 20px; border-radius: 4px; }
+    .legend .available { background: #444; }
+    .legend .selected { background: var(--accent); }
+    .legend .booked { background: #222; }
+
+
+/* Style inputs and selects consistently */
+label input,
+label select {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #111;
+    color: #fff;
+    font-size: 1rem;
+    margin-top: 8px;
+    width: 200px;
+    display: inline-block;
+}
+
+/* Focus effect */
+label input:focus,
+label select:focus {
+    outline: none;
+    border-color: #f1c40f;
+    box-shadow: 0 0 6px #f1c40f;
+}

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cinema — Showtime & Seat Selection</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="showtimeStyle.css" />
+
+</head>
+
+<body>
+  <!-- Auto-loaded header -->
+  <div id="header"></div>
+
+  <main>
+    <button id="backToDetails" class="btn outline">← Back to Movie Details</button>
+
+    <section class="section" style="padding-top:100px;">
+      <div class="container">
+        <h1 class="section-title" id="movieTitle">Movie</h1>
+        <p class="muted" id="movieDuration">Duration</p>
+      </div>
+    </section>
+    
+
+    <section class="section" style="padding-top:100px;">
+      <div class="container">
+        <h1 class="section-title">Select Seats for <span id="movieName"></span></h1>
+        <p class="muted">Choose your seats below and confirm your booking.</p>
+
+        <div class="legend">
+              <div><span class="available"></span>Available</div>
+              <div><span class="selected"></span>Selected</div>
+              <div><span class="booked"></span>Booked</div>
+        </div>
+
+        <div class="screen">Screen</div>
+        <div class="seat-map" id="seatMap"></div>
+
+        <div class="booking-summary">
+          <p>Selected Seats: <span id="selectedSeats">None</span></p>
+          <label>
+            Date: <input type="date" id="showDate" required>
+          </label>
+
+          <label>
+            Select Showtime: 
+            <select name="time" id="showTimeSelect" required>
+                <option value="10:00 AM">10:00 AM</option>
+                <option value="1:00 PM">1:00 PM</option>
+                <option value="4:00 PM">4:00 PM</option>
+                <option value="7:00 PM">7:00 PM</option>
+                <option value="9:30 PM">9:30 PM</option>
+            </select>
+            </label>
+
+          <br>
+          <button class="btn primary" id="confirmBooking">Confirm Booking</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Auto-loaded footer -->
+  <div id="footer"></div>
+
+  <script>
+    document.getElementById('backToDetails')?.addEventListener('click', () => {
+        const movieName = new URLSearchParams(window.location.search).get('movie');
+        if (movieName) {
+            window.location.href = `MovieDetailsPage.html?movie=${encodeURIComponent(movieName)}`;
+        } else {
+            window.history.back(); // fallback
+        }
+    });
+
+    // ------------------------
+    // Header + Footer
+    // ------------------------
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("header.html")
+        .then(res => res.text())
+        .then(html => {
+          const headerEl = document.getElementById("header");
+          headerEl.outerHTML = html;
+        });
+
+      fetch("footer.html")
+        .then(res => res.text())
+        .then(html => {
+          const footerDiv = document.getElementById("footer");
+          footerDiv.innerHTML = html;
+          const yearEl = document.getElementById("year");
+          if (yearEl) yearEl.textContent = new Date().getFullYear();
+        });
+
+      initSeatSelection();
+    });
+
+    // ------------------------
+    // Movie & Seat Selection
+    // ------------------------
+    const movies = {
+      "Gagamboy": { poster: "Images/Gagamboy_Movie.jpg", duration: "148 mins" },
+      "Wapakman": { poster: "Images/Wapakman.jpg", duration: "126 mins" },
+      "Ang Panday": { poster: "Images/Ang Panday.jpg", duration: "97 mins" },
+      "Bahay na Pula": { poster: "Images/Bahay na Pula.jpg", duration: "120 mins" },
+      "Kumander Ulupong": { poster: "Images/Kumander Ulupong.jpg", duration: "134 mins" }
+    };
+
+    function getMovieFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('movie');
+    }
+
+    function initSeatSelection() {
+      const movieName = getMovieFromURL() || "Movie";
+      document.getElementById("movieName").textContent = movieName;
+
+      const seatMapEl = document.getElementById("seatMap");
+      const selectedSeatsSet = new Set();
+      const selectedSeatsEl = document.getElementById("selectedSeats");
+
+      // 7 rows x 8 columns
+      const rows = ["A","B","C","D","E","F","G"];
+      const cols = 8;
+
+      rows.forEach(row => {
+        for (let i = 1; i <= cols; i++) {
+          const seat = document.createElement("div");
+          seat.classList.add("seat");
+          seat.dataset.seat = `${row}${i}`;
+          seat.textContent = `${row}${i}`;
+
+          // Random booked demo
+          if (Math.random() < 0.1) seat.classList.add("booked");
+
+          seat.addEventListener("click", () => {
+            if (seat.classList.contains("booked")) return;
+
+            seat.classList.toggle("selected");
+            if (seat.classList.contains("selected")) selectedSeatsSet.add(seat.dataset.seat);
+            else selectedSeatsSet.delete(seat.dataset.seat);
+
+            selectedSeatsEl.textContent = selectedSeatsSet.size > 0 ? Array.from(selectedSeatsSet).join(", ") : "None";
+          });
+
+          seatMapEl.appendChild(seat);
+        }
+      });
+
+    document.getElementById("confirmBooking").addEventListener("click", () => {
+        const date = document.getElementById("showDate").value;
+        if (!date) return alert("Please select a date.");
+        if (selectedSeatsSet.size === 0) return alert("Please select at least one seat.");
+
+        const time = document.getElementById("showTimeSelect").value;
+
+        alert(`Confirmed seats: ${Array.from(selectedSeatsSet).join(", ")} for "${movieName}" on ${date} at ${time}`);
+      });
+
+    const showDateInput = document.getElementById('showDate');
+    if (showDateInput) {
+        const today = new Date();
+        const minDate = today.toISOString().split('T')[0]; // Today
+        const maxDateObj = new Date();
+        maxDateObj.setMonth(maxDateObj.getMonth() + 1);  // 1 month in future
+        const maxDate = maxDateObj.toISOString().split('T')[0];
+
+        showDateInput.setAttribute('min', minDate);
+        showDateInput.setAttribute('max', maxDate);
+    }
+    }
+  </script>
+</body>
+</html>
