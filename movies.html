@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cinema — Movies</title>
+  <title>Movies</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -13,16 +13,20 @@
   <div id="header"></div>
 
   <main>
-    <!-- Page Hero -->
-    <!-- <section class="section" style="padding-top:100px;">
+    <section class="section">
       <div class="container">
-        <h1 class="section-title">Select Your Movies</h1>
-        <p class="muted">Browse our complete list of currently available films.</p>
+        <h1 class="section-title">Now Showing</h1>
+        <div class="grid" id="moviesGrid"></div>
       </div>
-    </section> -->
+      <br><br><br>
+      <div class="container">
+        <h1 class="section-title">Coming Soon</h1>
+        <div class="grid" id="comingSoonGrid"></div>
+      </div>
+    </section>
 
     <!-- Movies Grid -->
-    <section class="section">
+    <!-- <section class="section">
       <div class="container">
         <h1 class="section-title">Now Showing</h1>
         <div class="grid" id="moviesGrid">
@@ -75,7 +79,7 @@
           </article>
         </div>
       </div>
-    </section>
+    </section> -->
   </main>
 
   <!-- Auto-loaded footer -->
@@ -83,32 +87,6 @@
 
   <!-- Shared Scripts -->
   <script src="app.js"></script>
-  <!-- <script>
-    // Navigate to MovieDetailsPage on card click
-    document.getElementById('moviesGrid')?.addEventListener('click', e => {
-      const card = e.target.closest('.card');
-      if (!card) return;
 
-      // Ignore clicks on book buttons
-      if (e.target.closest('button')) return;
-
-      const movie = card.getAttribute('data-movie');
-      if (movie) {
-        window.location.href = `MovieDetailsPage.html?movie=${encodeURIComponent(movie)}`;
-      }
-    });
-
-    // Optional: Coming Soon cards can also redirect if you want
-    document.getElementById('comingSoonGrid')?.addEventListener('click', e => {
-      const card = e.target.closest('.card');
-      if (!card) return;
-      if (e.target.closest('button')) return;
-
-      const movie = card.getAttribute('data-movie');
-      if (movie) {
-        window.location.href = `MovieDetailsPage.html?movie=${encodeURIComponent(movie)}`;
-      }
-    });
-  </script> -->
 </body>
 </html>

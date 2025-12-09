@@ -1,60 +1,69 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cinema — Movie Details</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cinema — Movie Details</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
+  <body>
+    <!-- Auto-loaded header -->
+    <div id="header"></div>
 
-  <!-- Auto-loaded header -->
-  <div id="header"></div>
-
-  <main>
-    <section class="section" style="padding-top:100px;">
-      <div class="container" id="movieDetails">
-        <!-- Movie details will be dynamically inserted here -->
-      </div>
-    </section>
-  </main>
-
-  <!-- Auto-loaded footer -->
-  <div id="footer"></div>
-
-  <!-- Booking Modal (shared) -->
-  <div class="modal" id="modal" aria-hidden="true">
-    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
-      <h3 id="modalTitle">Book Tickets</h3>
-      <p class="muted" id="modalMovie">Movie</p>
-
-      <form id="bookingForm">
-        <label>
-          Date
-          <input type="date" name="date" required />
-        </label>
-        <label>
-          Seats
-          <select name="seats" required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
-        </label>
-
-        <div class="modal-actions">
-          <button type="submit" class="btn primary">Confirm</button>
-          <button type="button" class="btn ghost" id="cancelBtn">Cancel</button>
+    <main>
+      <button id="backToDetails" class="btn outline">
+        ← Back to Movies
+      </button>
+      <section class="section" style="padding-top: 100px">
+        <div class="container" id="movieDetails">
+          <!-- Movie details will be dynamically inserted here -->
         </div>
-      </form>
+      </section>
+    </main>
+
+    <!-- Auto-loaded footer -->
+    <div id="footer"></div>
+
+    <!-- Booking Modal (shared) -->
+    <div class="modal" id="modal" aria-hidden="true">
+      <div
+        class="modal-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <button class="modal-close" id="modalClose" aria-label="Close">
+          ✕
+        </button>
+        <h3 id="modalTitle">Book Tickets</h3>
+        <p class="muted" id="modalMovie">Movie</p>
+
+        <form id="bookingForm">
+          <label>
+            Date
+            <input type="date" name="date" required />
+          </label>
+          <label>
+            Seats
+            <select name="seats" required>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </label>
+
+          <div class="modal-actions">
+            <button type="submit" class="btn primary">Confirm</button>
+            <button type="button" class="btn ghost" id="cancelBtn">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
 
-  <!-- Scripts -->
-  <script src="app.js"></script>
-
-
-</body>
+    <!-- Scripts -->
+    <script src="app.js"></script>
+  </body>
 </html>

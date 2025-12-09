@@ -152,7 +152,7 @@ body {
 /* Section */
 .section{ padding:36px 0; }
 .section.gray{ background: #fbfbfb; }
-.section-title{ font-size:1.25rem; margin:0 0 18px; font-weight:700; }
+.section-title{ font-size:2rem; margin:0 0 18px; font-weight:700; }
 
 /* Highlight */
 .movie-highlight{
