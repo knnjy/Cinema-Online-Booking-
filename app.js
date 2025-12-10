@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Load Header
-  fetch("header.html")
+  fetch("../components/header.html")
   .then(res => res.text())
   .then(html => {
     const headerEl = document.getElementById("header");
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // Load Footer
-  fetch("footer.html")
+  fetch("../components/footer.html")
     .then(res => res.text())
     .then(html => {
       const footerDiv = document.getElementById("footer");
@@ -96,27 +96,28 @@ function initBookingModal() {
       }
     });
 
-    // Movie data
-    const nowShowingMovies = {
-      "Gagamboy": { poster: "Images/Gagamboy_Movie.jpg", duration: "148 mins", description: "After eating a spider doused in radioactive waste, ordinary ice cream vendor Junie uses his newfound powers to fight his rival, who becomes a mutated monster after he unknowingly ate a cockroach with the same radioactive element." },
-      "Wapakman": { poster: "Images/Wapakman.jpg", duration: "126 mins", description: "A Filipino superhero must decide if saving the world is worth leaving his children behind." },
-      "Ang Panday": { poster: "Images/Ang Panday.jpg", duration: "97 mins", description: "Forging a sword made from a meteor that fell from the sky, Flavio, alongside his dragon partner Bagwis, are soon thrust into a battle against the evil forces of Lizardo." },
-      "Bahay na Pula": { poster: "Images/Bahay na Pula.jpg", duration: "120 mins", description: "A woman and her husband come home to an old ancestral house she inherited from her grandma. As days go by, they realize something evil is living with them in the house." },
-      "Kumander Ulupong": { poster: "Images/Kumander Ulupong.jpg", duration: "134 mins", description: "Historical action film with epic battles." }
-    };
-    
-    const comingSoonMovies = {
-      "Dilim": { poster: "Images/Dilim.jpg", duration: "148 mins", description: "" },
-      "Everything About Her": { poster: "Images/Everything About Her.jpg", duration: "126 mins", description: "" },
-      "Kahit Butas ng Karayom Papasukin ko": { poster: "Images/Kahit Butas ng Karayom Papasukin ko.jpg", duration: "97 mins", description: "" },
-      "Moron 5": { poster: "Images/Moron 5.jpg", duration: "120 mins", description: "" },
-    };
+  // Movie data
+const nowShowingMovies = {
+    "Gagamboy": { poster: "../Images/Gagamboy_Movie.jpg", duration: "148 mins", description: "After eating a spider doused in radioactive waste, ordinary ice cream vendor Junie uses his newfound powers to fight his rival, who becomes a mutated monster after he unknowingly ate a cockroach with the same radioactive element." },
+    "Wapakman": { poster: "../Images/Wapakman.jpg", duration: "126 mins", description: "A Filipino superhero must decide if saving the world is worth leaving his children behind." },
+    "Ang Panday": { poster: "../Images/Ang Panday.jpg", duration: "97 mins", description: "Forging a sword made from a meteor that fell from the sky, Flavio, alongside his dragon partner Bagwis, are soon thrust into a battle against the evil forces of Lizardo." },
+    "Bahay na Pula": { poster: "../Images/Bahay na Pula.jpg", duration: "120 mins", description: "A woman and her husband come home to an old ancestral house she inherited from her grandma. As days go by, they realize something evil is living with them in the house." },
+    "Kumander Ulupong": { poster: "../Images/Kumander Ulupong.jpg", duration: "134 mins", description: "Historical action film with epic battles." }
+  };
+  
+const comingSoonMovies = {
+    "Dilim": { poster: "../Images/Dilim.jpg", duration: "148 mins", description: "" },
+    "Everything About Her": { poster: "../Images/Everything About Her.jpg", duration: "126 mins", description: "" },
+    "Kahit Butas ng Karayom Papasukin ko": { poster: "../Images/Kahit Butas ng Karayom Papasukin ko.jpg", duration: "97 mins", description: "" },
+    "Moron 5": { poster: "../Images/Moron 5.jpg", duration: "120 mins", description: "" },
+  };
 
-    function getMovieFromURL() {
-      const params = new URLSearchParams(window.location.search);
-      return params.get('movie') || null;
-    }
+  function getMovieFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('movie') || null;
+  }
 
+// MOVIE DETAILS
 function renderMovieDetails(movieName) {
   const container = document.getElementById('movieDetails');
   if (!container) return;
@@ -135,7 +136,9 @@ function renderMovieDetails(movieName) {
       <div class="highlight-body">
         <h2>${movieName}</h2>
         <p class="muted">${movie.duration}</p>
-        <p>${movie.description}</p>
+        
+        <p>${movie.description}</p><br>
+        <br>
         <div class="highlight-actions">
           <button class="btn primary" data-movie="${movieName}">Book Tickets Now</button>
         </div>
@@ -144,6 +147,7 @@ function renderMovieDetails(movieName) {
   `;
 }
 
+// MOVIE PAGE
 function renderMoviesGrid(containerId, movies, includeBookButton = false) {
       const container = document.getElementById(containerId);
       container.innerHTML = '';

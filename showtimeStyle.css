@@ -97,22 +97,26 @@ label select:focus,
 }
 
 /* MODAL */
-.modal-overlay {
+/* NEW MODAL SUPPORT (ARIA-TOGGLED) */
+#modal[aria-hidden="true"] {
+  display: none;
+}
+
+#modal[aria-hidden="false"] {
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.85);
-  display: none;
   justify-content: center;
   align-items: center;
   z-index: 9999;
 }
-.modal-overlay.show {
-  display: flex;
-}
-.modal {
+
+/* The panel inside the modal */
+.modal-panel {
   background-color: #111;
   color: #fff;
   padding: 30px;
@@ -126,9 +130,12 @@ label select:focus,
   transform: scale(0.9);
   transition: transform 0.2s ease;
 }
-.modal-overlay.show .modal {
+
+#modal[aria-hidden="false"] .modal-panel {
   transform: scale(1);
 }
+
+/* Close button */
 .modal-close {
   position: absolute;
   top: 10px;

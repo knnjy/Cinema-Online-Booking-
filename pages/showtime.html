@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cinema — Showtime & Seat Selection</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../showtimeStyle.css" />
+  </head>
+  <body>
+    <div id="header"></div>
+
+    <main>
+      <button id="backToDetails" class="btn outline">
+        ← Back to Movie Details
+      </button>
+
+      <section class="section" style="padding-top: 100px">
+        <div class="container">
+          <!-- Image of movie here -->
+          <h1 class="section-title" id="movieTitle">Movie</h1>
+          <p class="muted" id="movieDuration">Duration</p>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top: 100px">
+        <div class="container">
+          <h1 class="section-title">
+            Select Available Seats for <span id="movieName"></span>
+          </h1>
+          <p class="muted">Choose your prepared seats below and confirm your booking.</p>
+
+          <div class="legend">
+            <div><span class="available"></span>Available</div>
+            <div><span class="selected"></span>Selected</div>
+            <div><span class="booked"></span>Booked</div>
+          </div>
+
+          <div class="screen">Screen</div>
+          <div class="seat-map" id="seatMap"></div>
+
+          <div class="booking-summary">
+            <p>Selected Seats: <span id="selectedSeats">None</span></p>
+            <label
+              >Date:
+              <input type="date" id="showDate" class="styled-input" required
+            /></label>
+            <label
+              >Select Showtime:
+              <select
+                name="time"
+                id="showTimeSelect"
+                class="styled-input"
+                required
+              >
+                <option value="10:00 AM">10:00 AM</option>
+                <option value="1:00 PM">1:00 PM</option>
+                <option value="4:00 PM">4:00 PM</option>
+                <option value="7:00 PM">7:00 PM</option>
+                <option value="9:30 PM">9:30 PM</option>
+              </select>
+            </label>
+            <br />
+            <button
+              class="btn primary"
+              id="confirmBooking"
+              data-movie="Indie Film"
+            >
+              Confirm Booking
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <!-- PAYMENT MODAL -->
+    <!-- <div id="modal" id="modal" aria-hidden="true"></div> -->
+    <!-- <div id="paymentModal" class="modal-overlay">
+      <div class="modal">
+        <button class="modal-close" id="closeModal">✕</button>
+        <h2>Payment</h2>
+        <p class="muted">
+          Complete your booking by selecting a payment method.
+        </p>
+        <p>Total Seats: <span id="seatCount">0</span></p>
+        <p>Total Price: ₱<span id="totalPrice">0</span></p>
+
+        <label
+          >Payment Method:
+          <select id="paymentMethod" class="styled-input">
+            <option value="gcash">GCash</option>
+            <option value="card">Credit/Debit Card</option>
+            <option value="maya">Maya</option>
+          </select>
+        </label>
+
+        <label id="cardInputLabel" style="display: none">
+          Card Number:
+          <input
+            type="text"
+            id="cardNumber"
+            class="styled-input"
+            placeholder="XXXX-XXXX-XXXX-XXXX"
+          />
+        </label>
+
+        <button class="btn primary" id="payNow">Pay Now</button>
+      </div>
+    </div> -->
+    <div class="modal" id="modal" aria-hidden="true">
+      <div
+        class="modal-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <button class="modal-close" id="modalClose" aria-label="Close">
+          ✕
+        </button>
+        <h3 id="modalTitle">Payments</h3>
+        <p class="muted" id="modalMovie">Movie</p>
+
+        <form id="bookingForm">
+          <label>
+            Payment Method
+            <select name="paymentMode" required>
+              <option value="Credit Card">Credit Card</option>
+              <option value="Debit Card">Debit Card</option>
+              <option value="e-wallet">mobile wallet/e-wallet</option>
+            </select>
+          </label>
+
+          <div class="modal-actions">
+            <button type="submit" class="btn primary">Confirm</button>
+            <button type="button" class="btn ghost" id="cancelBtn">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // BACK TO DETAILS BUTTON
+      document.getElementById("backToDetails").addEventListener("click", () => {
+        const movieName = new URLSearchParams(window.location.search).get(
+          "movie"
+        );
+        if (movieName) {
+          window.location.href = `MovieDetailsPage.html?movie=${encodeURIComponent(
+            movieName
+          )}`;
+        } else {
+          window.history.back();
+        }
+      });
+
+      // HEADER + FOOTER LOAD
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("../components/header.html")
+          .then((res) => res.text())
+          .then((html) => (document.getElementById("header").outerHTML = html));
+        fetch("../components/footer.html")
+          .then((res) => res.text())
+          .then((html) => {
+            const footerDiv = document.getElementById("footer");
+            footerDiv.innerHTML = html;
+            const yearEl = document.getElementById("year");
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+          });
+
+        initSeatSelection();
+      });
+
+      // MOVIE DATA
+      const movies = {
+        Gagamboy: { poster: "Images/Gagamboy_Movie.jpg", duration: "148 mins" },
+        Wapakman: { poster: "Images/Wapakman.jpg", duration: "126 mins" },
+        "Ang Panday": { poster: "Images/Ang Panday.jpg", duration: "97 mins" },
+        "Bahay na Pula": {
+          poster: "Images/Bahay na Pula.jpg",
+          duration: "120 mins",
+        },
+        "Kumander Ulupong": {
+          poster: "Images/Kumander Ulupong.jpg",
+          duration: "134 mins",
+        },
+      };
+
+      function getMovieFromURL() {
+        return new URLSearchParams(window.location.search).get("movie");
+      }
+
+      // Seat Validator
+      function initSeatSelection() {
+        const movieName = getMovieFromURL() || "Movie";
+        document.getElementById("movieName").textContent = movieName;
+
+        if (movies[movieName]) {
+          document.getElementById("movieTitle").textContent = movieName;
+          document.getElementById("movieDuration").textContent =
+            movies[movieName].duration;
+        }
+
+        const seatMapEl = document.getElementById("seatMap");
+        const selectedSeatsSet = new Set();
+        const selectedSeatsEl = document.getElementById("selectedSeats");
+
+        const rows = ["A", "B", "C", "D", "E", "F", "G"];
+        const cols = 8;
+
+        rows.forEach((row) => {
+          for (let i = 1; i <= cols; i++) {
+            const seat = document.createElement("div");
+            seat.classList.add("seat");
+            seat.dataset.seat = `${row}${i}`;
+            seat.textContent = `${row}${i}`;
+
+            if (Math.random() < 0.1) seat.classList.add("booked"); // demo booked
+
+            seat.addEventListener("click", () => {
+              if (seat.classList.contains("booked")) return;
+              seat.classList.toggle("selected");
+              seat.classList.contains("selected")
+                ? selectedSeatsSet.add(seat.dataset.seat)
+                : selectedSeatsSet.delete(seat.dataset.seat);
+              selectedSeatsEl.textContent =
+                selectedSeatsSet.size > 0
+                  ? [...selectedSeatsSet].join(", ")
+                  : "None";
+            });
+
+            seatMapEl.appendChild(seat);
+          }
+        });
+
+        // DATE LIMITS
+        const showDateInput = document.getElementById("showDate");
+        const today = new Date();
+        const minDate = today.toISOString().split("T")[0];
+        const maxDateObj = new Date();
+        maxDateObj.setMonth(maxDateObj.getMonth() + 1);
+        const maxDate = maxDateObj.toISOString().split("T")[0];
+        showDateInput.setAttribute("min", minDate);
+        showDateInput.setAttribute("max", maxDate);
+
+        function printReceipt(invoiceNumber,movieName,seats,date,paymentMethod,total) {
+          const receiptWindow = window.open("", "_blank");
+          receiptWindow.document.write(`
+            <h1>Cinema Booking Receipt</h1>
+            <p>Invoice Number: ${invoiceNumber}</p>
+            <p>Movie: ${movieName}</p>
+            <p>Seats: ${seats.join(", ")}</p>
+            <p>Date: ${date}</p>
+            <p>Payment Method: ${paymentMethod}</p>
+            <p>Total: ₱${total}</p>
+            `);
+              receiptWindow.print();
+              // receiptWindow.close();
+          }
+
+        // Booking Modal
+        function initBookingModal() {
+          const confirmBtn = document.getElementById("confirmBooking");
+          const modal = document.getElementById("modal");
+          const modalClose = document.getElementById("modalClose");
+          const cancelBtn = document.getElementById("cancelBtn");
+          const bookingForm = document.getElementById("bookingForm");
+          const modalMovie = document.getElementById("modalMovie");
+          const selectedSeatsEl = document.getElementById("selectedSeats"); // seat display in main page
+
+          confirmBtn.addEventListener("click", () => {
+            const selectedSeats = [
+              ...document.querySelectorAll(".seat.selected"),
+            ].map((seat) => seat.dataset.seat);
+
+            const date = showDateInput.value;
+            if (!date) return alert("Please select a date.");
+            if (selectedSeats.length === 0)
+              return alert("Please select at least one seat.");
+
+            const movieName = document.getElementById("movieName").textContent;
+            const totalPrice = selectedSeats.length * 250; // calculate total
+
+            // Update modal content
+            modalMovie.innerHTML = `
+                    ${movieName} <br>
+                    Seats: ${selectedSeats.join(", ")} <br>
+                    Total: ₱${totalPrice}
+                  `;
+
+            modal.setAttribute("aria-hidden", "false");
+          });
+
+          modalClose?.addEventListener("click", () =>
+            modal.setAttribute("aria-hidden", "true")
+          );
+          cancelBtn?.addEventListener("click", () =>
+            modal.setAttribute("aria-hidden", "true")
+          );
+          modal?.addEventListener("click", (e) => {
+            if (e.target === modal) modal.setAttribute("aria-hidden", "true");
+          });
+
+         bookingForm?.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const data = new FormData(bookingForm);
+  const paymentMethod = data.get("paymentMode"); // must match select name
+  const selectedSeats = [...document.querySelectorAll(".seat.selected")].map(seat => seat.dataset.seat);
+  const movieName = document.getElementById("movieName").textContent;
+  const date = showDateInput.value;
+
+  if (!date) return alert("Please select a date.");
+  if (selectedSeats.length === 0) return alert("Please select at least one seat.");
+
+  const totalBill = selectedSeats.length * 250;
+  const invoiceNumber = `INV-${Date.now()}`;
+
+  printReceipt(invoiceNumber, movieName, selectedSeats, date, paymentMethod, totalBill);
+
+  modal.setAttribute("aria-hidden", "true");
+  bookingForm.reset();
+
+  // Clear seat selection
+  selectedSeats.forEach(seat => {
+    const seatEl = document.querySelector(`.seat[data-seat="${seat}"]`);
+    seatEl?.classList.remove("selected");
+  });
+  document.getElementById("selectedSeats").textContent = "None";
+
+  // Redirect to movie detail page
+  window.location.href = `MovieDetailsPage.html?movie=${encodeURIComponent(movieName)}`;
+});
+
+        }
+
+        // ✅ Correct actual call (outside the function)
+        initBookingModal();
+      }
+    </script>
+  </body>
+</html>

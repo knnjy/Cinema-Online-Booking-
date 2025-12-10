@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cinema — Movie Details</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+
+  <body>
+    <!-- Auto-loaded header -->
+    <div id="header"></div>
+
+    <main>
+      <button id="backToMovies" class="btn outline" href="movies.html">
+        ← Back to Movies
+      </button>
+      <section class="section" style="padding-top: 100px">
+        <div class="container" id="movieDetails">
+          <!-- Movie details will be dynamically inserted here -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Auto-loaded footer -->
+    <div id="footer"></div>
+
+    <!-- Scripts -->
+    <script src="../app.js"></script>
+    <script>
+      document.getElementById("backToMovies").addEventListener("click", () => {
+        window.location.href = "movies.html";
+      });
+    </script>
+  </body>
+</html>
