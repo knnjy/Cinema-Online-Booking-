@@ -98,10 +98,10 @@ const popularMovies = {
   }
 
 const heroMovies = {
-    "Trip ubusan: The Lolas vs Zombies": {poster: "../Images/Trip-Ubusan-The-Lolas-Vs-Zombies-Poster.jpeg", duration: "108 mins", description: "Lola Nidora, Lola Tinidora, and Lola Tidora of Kalyeserye, with their little niece Charmaine, attempt to survive a zombie outbreak."},
-    "Woke up like this": {poster: "../Images/wokeuplikethis.jpg", duration: "118 mins", description: "A story about Nando who's a dutiful son and breadwinner to his family and Sabrina a rich kid and one of the top models in the country. While both prepare for their biggest breaks, these two strangers wake up one day in an extraordinary circumstance switching bodies with each other."},
-    "Must be love": { poster: "../Images/Must be Love.jpg", duration: "100 mins", description: "Patricia falls in love with her childhood best friend Ivan, but he is in love with his cousin Angel. Will they ever be together?" },
-    "Penduko": { poster: "../Images/Penduko.png", duration: "109 mins", description: "Hoping to profit from his occult gifts, a mystic joins a shadowy society and must confront his own darkness as he finds his place in the underworld." },
+    "Trip ubusan: The Lolas vs Zombies": {poster: "Images/Trip-Ubusan-The-Lolas-Vs-Zombies-Poster.jpeg", duration: "108 mins", description: "Lola Nidora, Lola Tinidora, and Lola Tidora of Kalyeserye, with their little niece Charmaine, attempt to survive a zombie outbreak."},
+    "Woke up like this": {poster: "Images/wokeuplikethis.jpg", duration: "118 mins", description: "A story about Nando who's a dutiful son and breadwinner to his family and Sabrina a rich kid and one of the top models in the country. While both prepare for their biggest breaks, these two strangers wake up one day in an extraordinary circumstance switching bodies with each other."},
+    "Must be love": { poster: "Images/Must be Love.jpg", duration: "100 mins", description: "Patricia falls in love with her childhood best friend Ivan, but he is in love with his cousin Angel. Will they ever be together?" },
+    "Penduko": { poster: "Images/Penduko.png", duration: "109 mins", description: "Hoping to profit from his occult gifts, a mystic joins a shadowy society and must confront his own darkness as he finds his place in the underworld." },
     }
 
   function getMovieFromURL() {
