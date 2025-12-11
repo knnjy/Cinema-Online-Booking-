@@ -15,15 +15,12 @@
         ← Back to Movie Details
       </button>
 
-      <section class="section" style="padding-top: 100px">
+      <section class="section" style="padding-top: 50px">
         <div class="container">
           <!-- Image of movie here -->
           <h1 class="section-title" id="movieTitle">Movie</h1>
           <p class="muted" id="movieDuration">Duration</p>
         </div>
-      </section>
-
-      <section class="section" style="padding-top: 100px">
         <div class="container">
           <h1 class="section-title">
             Select Available Seats for <span id="movieName"></span>
@@ -86,9 +83,11 @@
           ✕
         </button>
         <h3 id="modalTitle">Payments</h3>
+
         <p class="muted" id="modalMovie">Movie</p>
 
         <form id="bookingForm">
+          <p>Please pick a payment mode</p>
           <label>
             Payment Method
             <select name="paymentMode" required>
@@ -98,6 +97,11 @@
             </select>
           </label>
 
+          <div>
+            <label for="accountNum">Enter Account Number</label>
+            <input type="text" id="accountNum" name="accountNum"><br>
+          </div>
+
           <div class="modal-actions">
             <button type="submit" class="btn primary">Confirm</button>
             <button type="button" class="btn ghost" id="cancelBtn">
@@ -105,6 +109,7 @@
             </button>
           </div>
         </form>
+
       </div>
     </div>
 
@@ -212,7 +217,7 @@
         showDateInput.setAttribute("min", minDate);
         showDateInput.setAttribute("max", maxDate);
 
-        function printReceipt(invoiceNumber,movieName,seats,date,paymentMethod,total) {
+  function printReceipt(invoiceNumber,movieName,seats,date,paymentMethod,total) {
           const receiptWindow = window.open("", "_blank");
           receiptWindow.document.write(`
             <h1>Cinema Booking Receipt</h1>
@@ -228,7 +233,7 @@
           }
 
         // Booking Modal
-        function initBookingModal() {
+  function initBookingModal() {
           const confirmBtn = document.getElementById("confirmBooking");
           const modal = document.getElementById("modal");
           const modalClose = document.getElementById("modalClose");
@@ -252,10 +257,10 @@
 
             // Update modal content
             modalMovie.innerHTML = `
-                    ${movieName} <br>
-                    Seats: ${selectedSeats.join(", ")} <br>
-                    Total: ₱${totalPrice}
-                  `;
+              <h1>Movie: ${movieName}</h1>
+              <p class="muted">Seats: ${selectedSeats.join(", ")}</p>
+              <p class="total">Total: ₱${totalPrice}</p>
+            `;
 
             modal.setAttribute("aria-hidden", "false");
           });
@@ -270,38 +275,40 @@
             if (e.target === modal) modal.setAttribute("aria-hidden", "true");
           });
 
-         bookingForm?.addEventListener("submit", (e) => {
-  e.preventDefault();
+    bookingForm?.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-  const data = new FormData(bookingForm);
-  const paymentMethod = data.get("paymentMode"); // must match select name
-  const selectedSeats = [...document.querySelectorAll(".seat.selected")].map(seat => seat.dataset.seat);
-  const movieName = document.getElementById("movieName").textContent;
-  const date = showDateInput.value;
+      const data = new FormData(bookingForm);
+      const paymentMethod = data.get("paymentMode"); // must match select name
+      const selectedSeats = [...document.querySelectorAll(".seat.selected")].map(seat => seat.dataset.seat);
+      const movieName = document.getElementById("movieName").textContent;
+      const date = showDateInput.value;
+      const accountNumber = data.get("accountNum");
 
-  if (!date) return alert("Please select a date.");
-  if (selectedSeats.length === 0) return alert("Please select at least one seat.");
+      if (!date) return alert("Please select a date.");
+      if (selectedSeats.length === 0) return alert("Please select at least one seat.");
+      if (!accountNumber) return alert("Please enter your account number.");
 
-  const totalBill = selectedSeats.length * 250;
-  const invoiceNumber = `INV-${Date.now()}`;
+      const totalBill = selectedSeats.length * 250;
+      const invoiceNumber = `INV-${Date.now()}`;
 
-  printReceipt(invoiceNumber, movieName, selectedSeats, date, paymentMethod, totalBill);
+      printReceipt(invoiceNumber, movieName, selectedSeats, date, paymentMethod, totalBill);
 
-  modal.setAttribute("aria-hidden", "true");
-  bookingForm.reset();
+      modal.setAttribute("aria-hidden", "true");
+      bookingForm.reset();
 
-  // Clear seat selection
-  selectedSeats.forEach(seat => {
-    const seatEl = document.querySelector(`.seat[data-seat="${seat}"]`);
-    seatEl?.classList.remove("selected");
+      // Clear seat selection
+      selectedSeats.forEach(seat => {
+        const seatEl = document.querySelector(`.seat[data-seat="${seat}"]`);
+        seatEl?.classList.remove("selected");
+      });
+      document.getElementById("selectedSeats").textContent = "None";
+
+      // Redirect to movie detail page
+      window.location.href = `MovieDetailsPage.html?movie=${encodeURIComponent(movieName)}`;
   });
-  document.getElementById("selectedSeats").textContent = "None";
 
-  // Redirect to movie detail page
-  window.location.href = `MovieDetailsPage.html?movie=${encodeURIComponent(movieName)}`;
-});
-
-        }
+  }
 
         // ✅ Correct actual call (outside the function)
         initBookingModal();

@@ -87,26 +87,27 @@ label select:focus,
   border-radius: 4px;
 }
 .legend .available {
-  background: #444;
+  background: #222;
 }
 .legend .selected {
   background: #f1c40f;
 }
 .legend .booked {
-  background: #222;
+  background: #444;
 }
 
 /* MODAL */
 /* NEW MODAL SUPPORT (ARIA-TOGGLED) */
+/* Hide modal when not active */
 #modal[aria-hidden="true"] {
   display: none;
 }
 
+/* Show modal overlay */
 #modal[aria-hidden="false"] {
   display: flex;
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0; /* shorthand for top/left/right/bottom = 0 */
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.85);
@@ -115,17 +116,17 @@ label select:focus,
   z-index: 9999;
 }
 
-/* The panel inside the modal */
+/* Modal panel */
 .modal-panel {
   background-color: #111;
   color: #fff;
-  padding: 30px;
+  padding: 30px 25px;
   border-radius: 12px;
   text-align: center;
   max-width: 400px;
   width: 90%;
   border: 1px solid #444;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
   position: relative;
   transform: scale(0.9);
   transition: transform 0.2s ease;
@@ -145,4 +146,81 @@ label select:focus,
   font-size: 22px;
   color: #fff;
   cursor: pointer;
+  transition: color 0.2s;
+}
+.modal-close:hover {
+  color: #f1c40f;
+}
+
+/* Modal headings and text */
+.modal-panel h3 {
+  margin-bottom: 8px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.modal-panel .muted {
+  font-size: 0.95rem;
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+/* Form elements */
+.modal-panel label {
+  display: block;
+  text-align: left;
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.modal-panel input,
+.modal-panel select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #222;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.modal-panel input:focus,
+.modal-panel select:focus {
+  border-color: #f1c40f;
+}
+
+/* Modal buttons */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-actions .btn.primary {
+  background-color: #f1c40f;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.modal-actions .btn.primary:hover {
+  background-color: #f1c40f;
+}
+
+.modal-actions .btn.ghost {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #555;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.modal-actions .btn.ghost:hover {
+  background-color: #222;
 }
