@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Cinemang Tunay</title>
-  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -16,7 +16,6 @@
         <a href="index.html">Home</a>
         <a href="#popular">Popular</a>
         <a href="pages/movies.html">Movies</a>
-        <button class="btn ghost" id="signin">KK</button>
       </nav>
 
       <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
@@ -39,7 +38,6 @@
     </div>
   </section>
 
-
     <!-- Now Showing -->
     <section id="now" class="section">
       <div class="container">
@@ -51,7 +49,7 @@
             <h3>Filipino Films</h3>
             <p class="muted">Get and choose your latest Best Filipino Films of all time only here at Cinemang Tunay.</p>
             <div class="highlight-actions">
-              <button class="btn primary" data-movie="Indie Film">Get Tickets Now</button>
+              <a class="btn primary" href = "pages/movies.html">Get Tickets Now</a>
             </div>
           </div>
         </div>
@@ -62,35 +60,9 @@
     <section id="popular" class="section">
       <div class="container">
         <h2 class="section-title">Latest Popular Movies</h2>
-        <div class="grid" id="movieGrid">
-          <!-- Cards inserted by HTML default; replace images with real posters -->
-          <article class="card">
-            <img src="../Images/Gagamboy_Movie.jpg" alt="Gagamboy poster" />
-            <div class="card-body">
-              <h3>Gagamboy</h3>
-              <p class="muted">148 mins</p>
-              <!-- <button class="btn ghost small" data-movie="Gagamboy">Book</button> -->
-            </div>
-          </article>
 
-          <article class="card">
-            <img src="../Images/Wapakman.jpg" alt="Wapakman poster" />
-            <div class="card-body">
-              <h3>Wapakman</h3>
-              <p class="muted">146 mins</p>
-              <!-- <button class="btn ghost small" data-movie="Wapakman">Book</button> -->
-            </div>
-          </article>
+        <div class="grid" id="popularGrid"></div>
 
-          <article class="card">
-            <img src="../Images/Ang Panday.jpg" alt="Ang Panday poster" />
-            <div class="card-body">
-              <h3>Ang Panday</h3>
-              <p class="muted">146 mins</p>
-              <!-- <button class="btn ghost small" data-movie="Ang Panday">Book</button> -->
-            </div>
-          </article>
-        </div>
       </div>
     </section>
 
@@ -123,36 +95,6 @@
     </div>
   </footer>
 
-
-  <!-- Booking Modal (simple) -->
-  <div class="modal" id="modal" aria-hidden="true">
-    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
-      <h3 id="modalTitle">Book Tickets</h3>
-      <p class="muted" id="modalMovie">Movie</p>
-
-      <form id="bookingForm">
-        <label>
-          Date
-          <input type="date" name="date" required />
-        </label>
-        <label>
-          Seats
-          <select name="seats" required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
-        </label>
-
-        <div class="modal-actions">
-          <button type="submit" class="btn primary">Confirm</button>
-          <button type="button" class="btn ghost" id="cancelBtn">Cancel</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script src="../app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
