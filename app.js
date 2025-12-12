@@ -92,9 +92,9 @@ const comingSoonMovies = {
     };
 
 const popularMovies = {
-    "Penduko": { poster: "../Images/Penduko.png", duration: "109 mins", description: "Hoping to profit from his occult gifts, a mystic joins a shadowy society and must confront his own darkness as he finds his place in the underworld." },
-    "Petrang Kabayo": { poster: "../Images/Petrang Kabayo.jpg", duration: "118 mins", description: "Peter Kasimsiman was once a submissive son to his parents. But losing his mother at a tender age, left him with an abusive father who only knew of tending to his carriage horse, Brown Beauty."},
-    "Sukob": {poster: "../Images/Sukob_Poster.jpg", duration: "110 mins", description: "Sandy and Phil, both Overseas Workers in Dubai, are busy preparing for their wedding. Upon reaching her home, Sandy learns from her mother Daisy what happened to her friend Helen: a short time after Helen's father died, Helen proceeded with her wedding. A few weeks after the wedding, Helen's husband died in a plane crash."},
+    "Penduko": { poster: "Images/Penduko.png", duration: "109 mins", description: "Hoping to profit from his occult gifts, a mystic joins a shadowy society and must confront his own darkness as he finds his place in the underworld." },
+    "Petrang Kabayo": { poster: "Images/Petrang Kabayo.jpg", duration: "118 mins", description: "Peter Kasimsiman was once a submissive son to his parents. But losing his mother at a tender age, left him with an abusive father who only knew of tending to his carriage horse, Brown Beauty."},
+    "Sukob": {poster: "Images/Sukob_Poster.jpg", duration: "110 mins", description: "Sandy and Phil, both Overseas Workers in Dubai, are busy preparing for their wedding. Upon reaching her home, Sandy learns from her mother Daisy what happened to her friend Helen: a short time after Helen's father died, Helen proceeded with her wedding. A few weeks after the wedding, Helen's husband died in a plane crash."},
   }
 
 const heroMovies = {
